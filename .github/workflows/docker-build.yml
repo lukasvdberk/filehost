@@ -32,6 +32,10 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       -
+        name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/release/}" >> $GITHUB_OUTPUT
+      -
         name: Build and push web filehost image to GHCR
         uses: docker/bake-action@v6
         with:
@@ -42,4 +46,4 @@ jobs:
                 docker-bake.hcl
             set: |
                 *.tags=ghcr.io/${{ github.repository_owner }}/filehost:latest
-                *.tags=ghcr.io/${{ github.repository_owner }}/filehost:${{ github.ref_name }}
+                *.tags=ghcr.io/${{ github.repository_owner }}/filehost:${{ steps.get_version.outputs.VERSION }}
