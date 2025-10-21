@@ -10,8 +10,20 @@ const port = process.env.PORT;
 const hosterEmail = process.env.HOSTER_EMAIL;
 
 app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'", "https://cdn.jsdelivr.net"],
+    },
+  },
+}));
 app.use(fileRoutes);
-app.use(helmet());
 
 const s3 = require("./engines/s3.engine");
 const local = require("./engines/local.engine");
@@ -55,6 +67,10 @@ app.get("/", async (req, res) => {
     hosterEmail: hosterEmail,
     version: version,
   });
+});
+
+app.get("/upload", (req, res) => {
+  res.render("upload");
 });
 
 app.listen(port, () => {
