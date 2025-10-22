@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Upload script loaded');
-
     const dragArea = document.getElementById('dragArea');
     const fileInput = document.getElementById('fileInput');
     const uploadForm = document.getElementById('uploadForm');
@@ -33,12 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (response.ok) {
                 serverConfig = await response.json();
                 maxSizeDisplay.textContent = `${serverConfig.maxFileSizeMB} MB`;
-                console.log('Server config loaded:', serverConfig);
             } else {
                 throw new Error('Failed to fetch server configuration');
             }
         } catch (error) {
-            console.error('Error fetching server config:', error);
             showError('Warning: Could not load server configuration. File size validation may be inaccurate.');
             maxSizeDisplay.textContent = 'Unknown';
         }
@@ -126,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Browse button functionality
     browseBtn.addEventListener('click', () => {
-        console.log('Browse button clicked');
         fileInput.click();
     });
 
@@ -134,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
     dragArea.addEventListener('click', (e) => {
         // Only trigger if not clicking the browse button itself
         if (e.target !== browseBtn) {
-            console.log('Drag area clicked');
             fileInput.click();
         }
     });
@@ -173,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     uploadForm.addEventListener('submit', async (e) => {
-        console.log('Form submitted');
         e.preventDefault();
 
         const file = fileInput.files[0];
@@ -187,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('file', file);
 
         const apiKey = document.getElementById('apiKey').value;
-        console.log('Starting upload with API key:', apiKey ? 'provided' : 'none');
 
         uploadProgress.style.display = 'block';
         uploadResult.style.display = 'none';
@@ -221,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         fileInfo.style.display = 'none';
                         uploadBtn.disabled = true;
                     } catch (parseError) {
-                        console.error('Error parsing success response:', parseError);
                         showError('Upload may have succeeded, but the response format was unexpected. Please check your uploads.');
                     }
                 } else {
@@ -260,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             uploadProgress.style.display = 'none';
             uploadBtn.disabled = false;
-            console.error('Upload error:', error);
             showError(`Upload failed: ${error.message || 'An unexpected error occurred. Please try again.'}`);
         }
     });
@@ -311,12 +301,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
             }
         }
-
-        console.error('Upload failed:', {
-            status: xhr.status,
-            statusText: xhr.statusText,
-            response: xhr.responseText
-        });
 
         showError(errorMsg);
     }
