@@ -89,8 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Check for extremely long filenames (common filesystem limit is 255 characters)
-        if (file.name.length > 255) {
-            showError(`Filename is too long (${file.name.length} characters). Maximum allowed is 255 characters.`);
+        if (file.name.length > serverConfig.fileNameLength) {
+            showError(`Filename is too long (${file.name.length} characters). Maximum allowed is ${serverConfig.fileNameLength} characters.`);
             return false;
         }
 
