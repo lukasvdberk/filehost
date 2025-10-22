@@ -73,6 +73,14 @@ app.get("/upload", (req, res) => {
   res.render("upload");
 });
 
+app.get("/api/config", (req, res) => {
+  res.json({
+    maxFileSize: parseInt(process.env.FILE_MAX_SIZE_MB, 10) * 1024 * 1024,
+    maxFileSizeMB: parseInt(process.env.FILE_MAX_SIZE_MB, 10),
+    fileNameLength: parseInt(process.env.FILE_NAME_LENGTH, 10) || 10,
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
