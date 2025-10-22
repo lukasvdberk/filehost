@@ -33,6 +33,26 @@
         .file-input {
             display: none;
         }
+
+        .error-message {
+            background-color: #991B1B;
+            border: 1px solid #DC2626;
+            color: #FEE2E2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #065F46;
+            border: 1px solid #10B981;
+            color: #D1FAE5;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-custom text-gray-100">
@@ -43,6 +63,7 @@
         </header>
         
         <main class="w-full max-w-2xl bg-coffee-color p-8 rounded-lg shadow-lg">
+            <div id="errorMessage" class="error-message"></div>
             <form id="uploadForm" enctype="multipart/form-data">
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2" for="apiKey">API Key (optional if public uploads enabled)</label>
