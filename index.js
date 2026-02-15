@@ -69,7 +69,12 @@ app.get("/", async (req, res) => {
   });
 });
 
+const enableUploadPage = process.env.ENABLE_UPLOAD_PAGE === "true";
+
 app.get("/upload", (req, res) => {
+  if (!enableUploadPage) {
+    return res.status(404).send("Upload page is disabled.");
+  }
   res.render("upload");
 });
 
